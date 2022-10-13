@@ -2,6 +2,7 @@ package com.example.jetpackcomposeproofofconcept.presentation.composables.screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -22,26 +23,36 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.jetpackcomposeproofofconcept.R
 import com.example.jetpackcomposeproofofconcept.presentation.theme.colorPrimary
 import com.example.jetpackcomposeproofofconcept.presentation.viewmodels.CharacterDetailViewModel
+import kotlinx.coroutines.flow.StateFlow
 
 @Composable
-fun CharacterScreen() {
-    val viewModel = hiltViewModel<CharacterDetailViewModel>()
-    val state by viewModel.mState.collectAsState()
+fun CharacterScreen(
+    viewModelState: StateFlow<CharacterDetailViewModel.CharacterDetailScreenState>,
+    uiEvent: (CharacterDetailViewModel.CharacterScreenEvent) -> Unit
+) {
+    val state by viewModelState.collectAsState()
 
     state.character?.let {
         Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Row(horizontalArrangement = Arrangement.End) {
-                Column {
+                Column(
+                    modifier = Modifier.clickable {
+                        uiEvent(
+                            CharacterDetailViewModel.CharacterScreenEvent.OnFavoriteClicked(
+                                characterId = it.id,
+                                isFavorite = !it.isFavorite
+                            )
+                        )
+                    }
+                ) {
                     Image(
-                        painter = painterResource(id = R.drawable.ic_no_favorite),
+                        painter = if (it.isFavorite) painterResource(id = R.drawable.ic_favorite) else painterResource(id = R.drawable.ic_no_favorite),
                         contentDescription = "Character image",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier
@@ -85,10 +96,4 @@ fun CharacterScreen() {
             }
         }
     }
-}
-
-@Composable
-@Preview
-fun CharacterScreenPreview() {
-    CharacterScreen()
 }

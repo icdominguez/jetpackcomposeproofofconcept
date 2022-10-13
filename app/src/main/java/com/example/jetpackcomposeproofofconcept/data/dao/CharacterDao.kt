@@ -12,7 +12,10 @@ interface CharacterDao {
     fun getAll(): Flow<List<CharacterEntity>>
 
     @Query("UPDATE character SET is_favorite = :favorite WHERE id = :characterId")
-    fun updateCharacterFavoriteValue(favorite: Boolean, characterId: Int)
+    suspend fun updateCharacterFavoriteValue(favorite: Boolean, characterId: Int)
+
+    @Query("SELECT * FROM character WHERE id = :characterId")
+    suspend fun getCharacterById(characterId: Int): CharacterEntity
 
     @Insert
     suspend fun insertAll(characterList: List<CharacterEntity>)

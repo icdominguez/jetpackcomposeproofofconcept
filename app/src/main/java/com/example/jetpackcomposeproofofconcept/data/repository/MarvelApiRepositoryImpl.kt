@@ -1,10 +1,10 @@
 package com.example.jetpackcomposeproofofconcept.data.repository
 
-import com.example.jetpackcomposeproofofconcept.data.BaseResult
-import com.example.jetpackcomposeproofofconcept.data.WrappedResponse
 import com.example.jetpackcomposeproofofconcept.data.api.MarvelApiService
+import com.example.jetpackcomposeproofofconcept.data.model.BaseResult
 import com.example.jetpackcomposeproofofconcept.data.model.Character
 import com.example.jetpackcomposeproofofconcept.data.model.CharactersResponse
+import com.example.jetpackcomposeproofofconcept.data.model.WrappedResponse
 import com.example.jetpackcomposeproofofconcept.data.model.entities.CharacterEntity
 import com.example.jetpackcomposeproofofconcept.domain.repository.MarvelApiRepository
 import com.google.gson.Gson

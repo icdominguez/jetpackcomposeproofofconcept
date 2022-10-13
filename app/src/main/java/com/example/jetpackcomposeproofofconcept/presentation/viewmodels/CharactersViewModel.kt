@@ -2,14 +2,13 @@ package com.example.jetpackcomposeproofofconcept.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.jetpackcomposeproofofconcept.data.BaseResult
 import com.example.jetpackcomposeproofofconcept.data.Constants
 import com.example.jetpackcomposeproofofconcept.data.Utils
+import com.example.jetpackcomposeproofofconcept.data.model.BaseResult
 import com.example.jetpackcomposeproofofconcept.data.model.entities.CharacterEntity
 import com.example.jetpackcomposeproofofconcept.domain.usecase.api.GetCharactersUseCase
 import com.example.jetpackcomposeproofofconcept.domain.usecase.localdatabase.GetStoredCharactersUseCase
 import com.example.jetpackcomposeproofofconcept.domain.usecase.localdatabase.InsertCharacterInBbddUseCase
-import com.example.jetpackcomposeproofofconcept.domain.usecase.localdatabase.UpdateCharacterIsFavoriteValueUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,8 +24,7 @@ import javax.inject.Inject
 class CharactersViewModel @Inject constructor(
     private val getCharacterUseCase: GetCharactersUseCase,
     private val getStoredCharactersUseCase: GetStoredCharactersUseCase,
-    private val insertCharacterInBbddUseCase: InsertCharacterInBbddUseCase,
-    private val updateCharacterIsFavoriteValueUseCase: UpdateCharacterIsFavoriteValueUseCase
+    private val insertCharacterInBbddUseCase: InsertCharacterInBbddUseCase
 ) : ViewModel() {
 
     private val state = MutableStateFlow(CharacterScreenState())
@@ -45,7 +43,9 @@ class CharactersViewModel @Inject constructor(
 
         viewModelScope.launch {
             getStoredCharactersUseCase.invoke().onStart {
+                Timber.d("Getting stored characters")
             }.catch {
+                Timber.d("Couldn't get character because of: ${it.message}")
             }.collect { characters ->
                 if (characters.isNotEmpty()) {
                     state.update { it.copy(listCharacter = characters) }
@@ -99,8 +99,4 @@ class CharactersViewModel @Inject constructor(
         val listCharacter: List<CharacterEntity> = emptyList(),
         val isLoading: Boolean = true
     )
-
-    sealed class CharacterScreenEvent {
-        data class OnFavoriteClicked(val characterId: Int) : CharacterScreenEvent()
-    }
 }

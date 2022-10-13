@@ -6,5 +6,5 @@ import javax.inject.Inject
 class UpdateCharacterIsFavoriteValueUseCase @Inject constructor(
     private val characterDao: CharacterDao
 ) {
-    private operator fun invoke(isFavorite: Boolean, characterId: Int) = characterDao.updateCharacterFavoriteValue(isFavorite, characterId)
+    suspend operator fun invoke(characterId: Int, isFavorite: Boolean) = characterDao.updateCharacterFavoriteValue(isFavorite, characterId)
 }
