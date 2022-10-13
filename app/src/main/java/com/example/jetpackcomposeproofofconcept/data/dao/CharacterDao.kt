@@ -1,9 +1,9 @@
-package com.example.jetpackcomposeproofofconcept.domain
+package com.example.jetpackcomposeproofofconcept.data.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
-import com.example.jetpackcomposeproofofconcept.domain.entity.CharacterEntity
+import com.example.jetpackcomposeproofofconcept.data.model.entities.CharacterEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

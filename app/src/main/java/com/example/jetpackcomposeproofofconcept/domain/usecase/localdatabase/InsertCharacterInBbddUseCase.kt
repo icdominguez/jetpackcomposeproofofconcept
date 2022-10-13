@@ -1,7 +1,7 @@
 package com.example.jetpackcomposeproofofconcept.domain.usecase.localdatabase
 
-import com.example.jetpackcomposeproofofconcept.domain.MarvelDatabaseRepository
-import com.example.jetpackcomposeproofofconcept.domain.entity.CharacterEntity
+import com.example.jetpackcomposeproofofconcept.data.model.entities.CharacterEntity
+import com.example.jetpackcomposeproofofconcept.domain.repository.MarvelDatabaseRepository
 import javax.inject.Inject
 
 class InsertCharacterInBbddUseCase @Inject constructor(

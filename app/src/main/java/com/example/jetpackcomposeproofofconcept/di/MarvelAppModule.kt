@@ -2,14 +2,14 @@ package com.example.jetpackcomposeproofofconcept.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.jetpackcomposeproofofconcept.domain.CharacterDao
-import com.example.jetpackcomposeproofofconcept.data.MarvelApiRepositoryImpl
-import com.example.jetpackcomposeproofofconcept.data.MarvelApiService
-import com.example.jetpackcomposeproofofconcept.data.MarvelDatabaseRepositoryImpl
-import com.example.jetpackcomposeproofofconcept.domain.Constants
-import com.example.jetpackcomposeproofofconcept.domain.MarvelApiRepository
-import com.example.jetpackcomposeproofofconcept.domain.MarvelDatabase
-import com.example.jetpackcomposeproofofconcept.domain.MarvelDatabaseRepository
+import com.example.jetpackcomposeproofofconcept.data.Constants
+import com.example.jetpackcomposeproofofconcept.data.MarvelDatabase
+import com.example.jetpackcomposeproofofconcept.data.api.MarvelApiService
+import com.example.jetpackcomposeproofofconcept.data.dao.CharacterDao
+import com.example.jetpackcomposeproofofconcept.data.repository.MarvelApiRepositoryImpl
+import com.example.jetpackcomposeproofofconcept.data.repository.MarvelDatabaseRepositoryImpl
+import com.example.jetpackcomposeproofofconcept.domain.repository.MarvelApiRepository
+import com.example.jetpackcomposeproofofconcept.domain.repository.MarvelDatabaseRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -54,5 +54,4 @@ object MarvelAppModule {
 
     @Provides
     fun provideMarvelDatabaseRepository(characterDao: CharacterDao): MarvelDatabaseRepository = MarvelDatabaseRepositoryImpl(characterDao)
-
 }

@@ -1,12 +1,12 @@
-package com.example.jetpackcomposeproofofconcept.presentation
+package com.example.jetpackcomposeproofofconcept.presentation.viewmodels
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.jetpackcomposeproofofconcept.data.BaseResult
+import com.example.jetpackcomposeproofofconcept.data.Constants
 import com.example.jetpackcomposeproofofconcept.data.Utils
-import com.example.jetpackcomposeproofofconcept.domain.BaseResult
-import com.example.jetpackcomposeproofofconcept.domain.Constants
-import com.example.jetpackcomposeproofofconcept.domain.entity.CharacterEntity
+import com.example.jetpackcomposeproofofconcept.data.model.entities.CharacterEntity
 import com.example.jetpackcomposeproofofconcept.domain.usecase.api.GetCharacterUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -63,6 +63,6 @@ class CharacterDetailViewModel @Inject constructor(
 
     data class CharacterDetailScreenState(
         val characterId: Int = 0,
-        val character: CharacterEntity ? = null
+        val character: CharacterEntity? = null
     )
 }

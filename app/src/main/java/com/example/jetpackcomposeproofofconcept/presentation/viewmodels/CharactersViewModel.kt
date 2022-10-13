@@ -1,11 +1,11 @@
-package com.example.jetpackcomposeproofofconcept.presentation
+package com.example.jetpackcomposeproofofconcept.presentation.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.jetpackcomposeproofofconcept.data.BaseResult
+import com.example.jetpackcomposeproofofconcept.data.Constants
 import com.example.jetpackcomposeproofofconcept.data.Utils
-import com.example.jetpackcomposeproofofconcept.domain.BaseResult
-import com.example.jetpackcomposeproofofconcept.domain.Constants
-import com.example.jetpackcomposeproofofconcept.domain.entity.CharacterEntity
+import com.example.jetpackcomposeproofofconcept.data.model.entities.CharacterEntity
 import com.example.jetpackcomposeproofofconcept.domain.usecase.api.GetCharactersUseCase
 import com.example.jetpackcomposeproofofconcept.domain.usecase.localdatabase.GetStoredCharactersUseCase
 import com.example.jetpackcomposeproofofconcept.domain.usecase.localdatabase.InsertCharacterInBbddUseCase
@@ -26,7 +26,7 @@ class CharactersViewModel @Inject constructor(
     private val getCharacterUseCase: GetCharactersUseCase,
     private val getStoredCharactersUseCase: GetStoredCharactersUseCase,
     private val insertCharacterInBbddUseCase: InsertCharacterInBbddUseCase,
-    private val updateCharacterIsFavoriteValueUseCase: UpdateCharacterIsFavoriteValueUseCase,
+    private val updateCharacterIsFavoriteValueUseCase: UpdateCharacterIsFavoriteValueUseCase
 ) : ViewModel() {
 
     private val state = MutableStateFlow(CharacterScreenState())
@@ -102,6 +102,5 @@ class CharactersViewModel @Inject constructor(
 
     sealed class CharacterScreenEvent {
         data class OnFavoriteClicked(val characterId: Int) : CharacterScreenEvent()
-        data class OnCharacterCardClicked(val characterId: Int) : CharacterScreenEvent()
     }
 }

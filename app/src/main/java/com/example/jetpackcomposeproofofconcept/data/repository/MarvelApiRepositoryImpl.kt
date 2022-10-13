@@ -1,10 +1,12 @@
-package com.example.jetpackcomposeproofofconcept.data
+package com.example.jetpackcomposeproofofconcept.data.repository
 
+import com.example.jetpackcomposeproofofconcept.data.BaseResult
+import com.example.jetpackcomposeproofofconcept.data.WrappedResponse
+import com.example.jetpackcomposeproofofconcept.data.api.MarvelApiService
 import com.example.jetpackcomposeproofofconcept.data.model.Character
 import com.example.jetpackcomposeproofofconcept.data.model.CharactersResponse
-import com.example.jetpackcomposeproofofconcept.domain.BaseResult
-import com.example.jetpackcomposeproofofconcept.domain.MarvelApiRepository
-import com.example.jetpackcomposeproofofconcept.domain.entity.CharacterEntity
+import com.example.jetpackcomposeproofofconcept.data.model.entities.CharacterEntity
+import com.example.jetpackcomposeproofofconcept.domain.repository.MarvelApiRepository
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.flow.Flow
@@ -41,7 +43,7 @@ class MarvelApiRepositoryImpl @Inject constructor(
         id: Int,
         apiKey: String,
         hash: String,
-        ts: Long,
+        ts: Long
     ): Flow<BaseResult<CharacterEntity, WrappedResponse<CharactersResponse>>> = flow {
         val response = marvelApiService.getCharacter(id = id, apikey = apiKey, hash = hash, ts = ts)
 

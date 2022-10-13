@@ -1,4 +1,4 @@
-package com.example.jetpackcomposeproofofconcept.domain.entity
+package com.example.jetpackcomposeproofofconcept.data.model.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

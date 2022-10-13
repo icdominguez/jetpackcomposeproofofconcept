@@ -1,10 +1,10 @@
 package com.example.jetpackcomposeproofofconcept.domain.usecase.api
 
+import com.example.jetpackcomposeproofofconcept.data.BaseResult
 import com.example.jetpackcomposeproofofconcept.data.WrappedResponse
 import com.example.jetpackcomposeproofofconcept.data.model.Character
 import com.example.jetpackcomposeproofofconcept.data.model.CharactersResponse
-import com.example.jetpackcomposeproofofconcept.domain.BaseResult
-import com.example.jetpackcomposeproofofconcept.domain.MarvelApiRepository
+import com.example.jetpackcomposeproofofconcept.domain.repository.MarvelApiRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

@@ -28,11 +28,11 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.rememberAsyncImagePainter
 import com.example.jetpackcomposeproofofconcept.R
-import com.example.jetpackcomposeproofofconcept.presentation.CharacterDetailViewModel
 import com.example.jetpackcomposeproofofconcept.presentation.theme.colorPrimary
+import com.example.jetpackcomposeproofofconcept.presentation.viewmodels.CharacterDetailViewModel
 
 @Composable
-fun CharacterScreen(id: Int?) {
+fun CharacterScreen() {
     val viewModel = hiltViewModel<CharacterDetailViewModel>()
     val state by viewModel.mState.collectAsState()
 
@@ -49,7 +49,6 @@ fun CharacterScreen(id: Int?) {
                             .padding(4.dp)
                     )
                 }
-
             }
             Row {
                 Image(
@@ -91,5 +90,5 @@ fun CharacterScreen(id: Int?) {
 @Composable
 @Preview
 fun CharacterScreenPreview() {
-    CharacterScreen(id = 1)
+    CharacterScreen()
 }

@@ -1,6 +1,6 @@
 package com.example.jetpackcomposeproofofconcept.domain.usecase.localdatabase
 
-import com.example.jetpackcomposeproofofconcept.domain.CharacterDao
+import com.example.jetpackcomposeproofofconcept.data.dao.CharacterDao
 import javax.inject.Inject
 
 class UpdateCharacterIsFavoriteValueUseCase @Inject constructor(

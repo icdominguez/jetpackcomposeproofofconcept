@@ -1,6 +1,6 @@
-package com.example.jetpackcomposeproofofconcept.domain
+package com.example.jetpackcomposeproofofconcept.domain.repository
 
-import com.example.jetpackcomposeproofofconcept.domain.entity.CharacterEntity
+import com.example.jetpackcomposeproofofconcept.data.model.entities.CharacterEntity
 import kotlinx.coroutines.flow.Flow
 
 interface MarvelDatabaseRepository {

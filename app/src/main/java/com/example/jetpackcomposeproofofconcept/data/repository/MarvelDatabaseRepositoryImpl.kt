@@ -1,8 +1,8 @@
-package com.example.jetpackcomposeproofofconcept.data
+package com.example.jetpackcomposeproofofconcept.data.repository
 
-import com.example.jetpackcomposeproofofconcept.domain.CharacterDao
-import com.example.jetpackcomposeproofofconcept.domain.MarvelDatabaseRepository
-import com.example.jetpackcomposeproofofconcept.domain.entity.CharacterEntity
+import com.example.jetpackcomposeproofofconcept.data.dao.CharacterDao
+import com.example.jetpackcomposeproofofconcept.data.model.entities.CharacterEntity
+import com.example.jetpackcomposeproofofconcept.domain.repository.MarvelDatabaseRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

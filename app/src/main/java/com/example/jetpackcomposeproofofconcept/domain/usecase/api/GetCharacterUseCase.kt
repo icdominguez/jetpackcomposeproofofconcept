@@ -1,6 +1,6 @@
 package com.example.jetpackcomposeproofofconcept.domain.usecase.api
 
-import com.example.jetpackcomposeproofofconcept.domain.MarvelApiRepository
+import com.example.jetpackcomposeproofofconcept.domain.repository.MarvelApiRepository
 import javax.inject.Inject
 
 class GetCharacterUseCase @Inject constructor(
@@ -10,6 +10,6 @@ class GetCharacterUseCase @Inject constructor(
         id: Int,
         apiKey: String,
         hash: String,
-        ts: Long,
+        ts: Long
     ) = marvelApiRepository.getCharacter(id, apiKey, hash, ts)
 }

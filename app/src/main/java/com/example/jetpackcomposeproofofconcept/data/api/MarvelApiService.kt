@@ -1,4 +1,4 @@
-package com.example.jetpackcomposeproofofconcept.data
+package com.example.jetpackcomposeproofofconcept.data.api
 
 import com.example.jetpackcomposeproofofconcept.data.model.CharactersResponse
 import com.example.jetpackcomposeproofofconcept.data.model.ComicsResponse
@@ -23,7 +23,7 @@ interface MarvelApiService {
         @Path("id") id: Int,
         @Query("apikey") apikey: String,
         @Query("hash") hash: String,
-        @Query("ts") ts: Long,
+        @Query("ts") ts: Long
     ): Response<CharactersResponse>
 
     @GET("comics")
