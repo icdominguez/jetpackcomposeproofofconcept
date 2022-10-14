@@ -19,6 +19,7 @@ I also added a package called di whith the module with all the provides need usi
 Third party libraries used: 
   - Retrotif: for getting the info from the api. https://square.github.io/retrofit/
   - Gson: for transforming the data retrieved from server into objects. https://github.com/google/gson
-  - Timber: For writting logs. https://github.com/JakeWharton/timber.
+  - Timber: For writting logs. https://github.com/JakeWharton/timber
+  - Coil compose: To load url into an image. https://coil-kt.github.io/coil/compose/
     
 I also used corrutines for doing the requests, room for storing the data in the device and compose navigation for the whole app navigation.
