@@ -21,10 +21,8 @@ import com.example.jetpackcomposeproofofconcept.presentation.theme.colorPrimary
 
 @Composable
 fun CharacterItem(
-    id: Int,
     name: String,
-    image: String,
-    isFavorite: Boolean
+    image: String
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Image(
