@@ -9,6 +9,7 @@ The idea is the following:
 - Presentation: All composables, navigation and screens. Here I'm using state to update the UI when changes are applied. I'm using events to control the user interaction with UI and the the view model is in charge to comunicate with the domain layer.
 - Domain: All the business logic. Use cases and repository interfaces that will be implemented by the data layer.
 - Data: All the models and repostiory interfaces.
+- Api: Interfaces to serve to other modules. The idea is not to show nothing related with logic to external modules.
 
 So this could be the idea: 
 
@@ -17,7 +18,7 @@ So this could be the idea:
 I also added a package called di whith the module with all the provides need using Hilt.
 
 Third party libraries used: 
-  - Retrotif: for getting the info from the api. https://square.github.io/retrofit/
+  - Retrofit: for getting the info from the api. https://square.github.io/retrofit/
   - Gson: for transforming the data retrieved from server into objects. https://github.com/google/gson
   - Timber: For writting logs. https://github.com/JakeWharton/timber
   - Coil compose: To load url into an image. https://coil-kt.github.io/coil/compose/
