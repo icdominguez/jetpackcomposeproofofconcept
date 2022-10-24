@@ -16,3 +16,4 @@ rootProject.name = "JetpackComposeProofOfConcept"
 include ':app'
 include ':database'
 include ':network'
+include ':core'

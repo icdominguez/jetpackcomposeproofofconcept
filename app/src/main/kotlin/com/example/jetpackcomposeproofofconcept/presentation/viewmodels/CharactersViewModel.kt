@@ -3,17 +3,20 @@ package com.example.jetpackcomposeproofofconcept.presentation.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.jetpackcomposeproofofconcept.data.Utils
-import com.icdominguez.database.data.entity.CharacterEntity
-import com.icdominguez.network.domain.GetCharactersUseCase
+import com.icdominguez.core.api.Character
+import com.icdominguez.database.api.MarvelDatabaseRepository
 import com.icdominguez.database.domain.GetStoredCharactersUseCase
 import com.icdominguez.database.domain.InsertCharacterInBbddUseCase
+import com.icdominguez.network.api.BaseResult
 import com.icdominguez.network.api.Constants.API_KEY
 import com.icdominguez.network.api.Constants.PRIVATE_API_KEY
-import com.icdominguez.network.data.model.BaseResult
+import com.icdominguez.network.api.MarvelApiRepository
+import com.icdominguez.network.domain.GetCharactersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -25,7 +28,8 @@ import javax.inject.Inject
 class CharactersViewModel @Inject constructor(
     private val getCharacterUseCase: GetCharactersUseCase,
     private val getStoredCharactersUseCase: GetStoredCharactersUseCase,
-    private val insertCharacterInBbddUseCase: InsertCharacterInBbddUseCase
+    private val marvelApiRepository: MarvelApiRepository,
+    private val marvelDatabaseRepository: MarvelDatabaseRepository
 ) : ViewModel() {
 
     private val state = MutableStateFlow(CharacterScreenState())
@@ -43,7 +47,7 @@ class CharactersViewModel @Inject constructor(
         Timber.i("View model created")
 
         viewModelScope.launch {
-            getStoredCharactersUseCase.invoke().onStart {
+            marvelDatabaseRepository.getAllCharacters().onStart {
                 Timber.d("Getting stored characters")
             }.catch {
                 Timber.d("Couldn't get character because of: ${it.message}")
@@ -54,7 +58,7 @@ class CharactersViewModel @Inject constructor(
                     val date = Date().time
                     getCharacterUseCase.invoke(
                         API_KEY,
-                        Utils.md5("${date}${PRIVATE_API_KEY}${API_KEY}"),
+                        Utils.md5("${date}${PRIVATE_API_KEY}$API_KEY"),
                         0,
                         date
                     ).onStart {
@@ -70,18 +74,11 @@ class CharactersViewModel @Inject constructor(
                                 Timber.i("Characters received")
 
                                 // TODO: Create a module with common classes to export same character object for all the modules
-                                val characterList = baseResult.data.map { character ->
-                                    CharacterEntity(
-                                        character.id!!,
-                                        character.name!!,
-                                        character.description!!,
-                                        "${character.thumbnail?.path}.${character.thumbnail?.extension}",
-                                        false
-                                    )
-                                }
+                                val characterList = baseResult.data
 
                                 viewModelScope.launch {
-                                    insertCharacterInBbddUseCase.invoke(characterList = characterList)
+
+                                    marvelDatabaseRepository.insertCharacters(characterList)
                                 }
 
                                 state.update { it.copy(listCharacter = characterList) }
@@ -98,7 +95,7 @@ class CharactersViewModel @Inject constructor(
     }
 
     data class CharacterScreenState(
-        val listCharacter: List<CharacterEntity> = emptyList(),
+        val listCharacter: List<Character> = emptyList(),
         val isLoading: Boolean = true
     )
 }

@@ -3,11 +3,12 @@ package com.example.jetpackcomposeproofofconcept.presentation.viewmodels
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import com.example.jetpackcomposeproofofconcept.data.Utils
-import com.icdominguez.database.data.entity.CharacterEntity
-import com.icdominguez.network.domain.GetCharacterUseCase
-import com.icdominguez.database.domain.GetStoredCharacterUseCase
-import com.icdominguez.database.domain.UpdateCharacterIsFavoriteValueUseCase
 import com.example.jetpackcomposeproofofconcept.presentation.EventLogic
+import com.icdominguez.core.api.Character
+import com.icdominguez.database.api.MarvelDatabaseRepository
+import com.icdominguez.network.api.BaseResult
+import com.icdominguez.network.api.Constants
+import com.icdominguez.network.api.MarvelApiRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,9 +23,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val getCharacterUseCase: GetCharacterUseCase,
-    private val updateCharacterIsFavoriteValueUseCase: UpdateCharacterIsFavoriteValueUseCase,
-    private val getStoredCharacterUseCase: GetStoredCharacterUseCase
+    private val marvelApiRepository: MarvelApiRepository,
+    private val marvelDatabaseRepository: MarvelDatabaseRepository
 ) : EventLogic<CharacterDetailViewModel.CharacterScreenEvent>() {
 
     private val state = MutableStateFlow(CharacterDetailScreenState())
@@ -38,10 +38,11 @@ class CharacterDetailViewModel @Inject constructor(
         viewModelScope.launch {
             argument?.let {
                 val date = Date().time
-                getCharacterUseCase.invoke(
+
+                marvelApiRepository.getCharacter(
                     it,
-                    com.icdominguez.network.api.Constants.API_KEY,
-                    Utils.md5("${date}${com.icdominguez.network.api.Constants.PRIVATE_API_KEY}${com.icdominguez.network.api.Constants.API_KEY}"),
+                    Constants.API_KEY,
+                    Utils.md5("${date}${Constants.PRIVATE_API_KEY}${Constants.API_KEY}"),
                     date
                 ).onStart {
                     Timber.d("Getting character")
@@ -51,11 +52,11 @@ class CharacterDetailViewModel @Inject constructor(
                     Timber.d("Nice call")
 
                     when (baseResult) {
-                        is com.icdominguez.network.data.model.BaseResult.Success -> {
+                        is BaseResult.Success -> {
                             state.update { it.copy(character = baseResult.data) }
                         }
 
-                        is com.icdominguez.network.data.model.BaseResult.Failure -> {
+                        is BaseResult.Failure -> {
                             Timber.e(baseResult.rawResponse.message)
                         }
                     }
@@ -66,7 +67,7 @@ class CharacterDetailViewModel @Inject constructor(
 
     data class CharacterDetailScreenState(
         val characterId: Int = 0,
-        val character: CharacterEntity? = null
+        val character: Character? = null
     )
 
     sealed class CharacterScreenEvent {
@@ -77,10 +78,12 @@ class CharacterDetailViewModel @Inject constructor(
         when (event) {
             is CharacterScreenEvent.OnFavoriteClicked -> {
                 viewModelScope.launch {
-                    updateCharacterIsFavoriteValueUseCase.invoke(event.characterId, event.isFavorite)
+                    marvelDatabaseRepository.updateCharacterIsFavorite(event.characterId, event.isFavorite)
 
                     // Here we need to update the state, that's why I need to ask to the bbdd which is the value of isFavorite getting the whole character object
-                    state.update { it.copy(character = getStoredCharacterUseCase.invoke(event.characterId)) }
+                    marvelDatabaseRepository.getCharacterById(event.characterId).collect { character ->
+                        state.update { it.copy(character = character) }
+                    }
                 }
             }
         }

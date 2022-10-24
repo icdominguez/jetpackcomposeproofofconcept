@@ -1,12 +1,7 @@
 package com.icdominguez.network.api
 
-import com.example.jetpackcomposeproofofconcept.data.model.BaseResult
-import com.icdominguez.network.data.model.responses.Character
+import com.icdominguez.core.api.Character
 import com.icdominguez.network.data.model.responses.CharactersResponse
-import com.example.jetpackcomposeproofofconcept.data.model.WrappedResponse
-import com.icdominguez.database.data.entity.CharacterEntity
-import com.icdominguez.network.data.model.BaseResult
-import com.icdominguez.network.data.model.WrappedResponse
 import kotlinx.coroutines.flow.Flow
 
 interface MarvelApiRepository {
@@ -22,5 +17,5 @@ interface MarvelApiRepository {
         apiKey: String,
         hash: String,
         ts: Long
-    ): Flow<BaseResult<CharacterEntity, WrappedResponse<CharactersResponse>>>
+    ): Flow<BaseResult<Character, WrappedResponse<CharactersResponse>>>
 }

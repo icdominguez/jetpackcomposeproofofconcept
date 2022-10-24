@@ -35,15 +35,13 @@ fun CharactersScreen(navController: NavController) {
                 item {
                     Column(
                         modifier = Modifier.fillMaxSize().clickable {
-                            navController.navigate(route = AppScreens.CharacterScreen.route + "/${character.id}")
+                            navController.navigate(route = AppScreens.CharacterScreen.route + "/${character.characterId}")
                         },
                         horizontalAlignment = CenterHorizontally
                     ) {
                         CharacterItem(
-                            character.id,
                             character.name,
-                            character.image,
-                            character.isFavorite
+                            character.image
                         )
                     }
                 }

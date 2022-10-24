@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.jetpackcomposeproofofconcept"
-        minSdk 24
+        minSdk 26
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -77,6 +77,7 @@ dependencies {
 
     implementation "io.coil-kt:coil-compose:$coil_compose_version"
 
-    implementation project(path: ':database')
-    implementation project(path: ':network')
+    implementation project('path': ':database')
+    implementation project('path': ':network')
+    implementation project('path': ':core')
 }

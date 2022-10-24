@@ -1,10 +1,11 @@
 package com.icdominguez.database.api
 
-import com.icdominguez.database.data.entity.CharacterEntity
+import com.icdominguez.core.api.Character
 import kotlinx.coroutines.flow.Flow
 
 interface MarvelDatabaseRepository {
-    suspend fun insertCharacters(characterList: List<CharacterEntity>)
-    suspend fun getCharacterById(characterId: Int): Flow<CharacterEntity>
-    fun getAllCharacters(): Flow<List<CharacterEntity>>
+    suspend fun insertCharacters(characterList: List<Character>)
+    suspend fun getCharacterById(characterId: Int): Flow<Character>
+    suspend fun updateCharacterIsFavorite(characterId: Int, isFavorite: Boolean)
+    fun getAllCharacters(): Flow<List<Character>>
 }

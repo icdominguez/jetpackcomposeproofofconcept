@@ -1,8 +1,9 @@
 package com.icdominguez.network.domain
 
+import com.icdominguez.core.api.Character
 import com.icdominguez.network.api.MarvelApiRepository
-import com.icdominguez.network.data.model.BaseResult
-import com.icdominguez.network.data.model.WrappedResponse
+import com.icdominguez.network.api.BaseResult
+import com.icdominguez.network.api.WrappedResponse
 import com.icdominguez.network.data.model.responses.CharactersResponse
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject

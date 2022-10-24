@@ -1,4 +1,4 @@
-package com.icdominguez.network.data.model
+package com.icdominguez.network.api
 
 import com.google.gson.annotations.SerializedName
 

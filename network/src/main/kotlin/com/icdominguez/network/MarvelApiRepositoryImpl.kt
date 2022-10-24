@@ -2,9 +2,11 @@ package com.icdominguez.network
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.icdominguez.core.api.Character
 import com.icdominguez.network.api.MarvelApiRepository
-import com.icdominguez.network.data.model.BaseResult
-import com.icdominguez.network.data.model.WrappedResponse
+import com.icdominguez.network.data.Extensions.toCharacter
+import com.icdominguez.network.api.BaseResult
+import com.icdominguez.network.api.WrappedResponse
 import com.icdominguez.network.data.model.responses.CharactersResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -19,13 +21,22 @@ class MarvelApiRepositoryImpl @Inject constructor(
         hash: String,
         offset: Int,
         ts: Long
-    ): Flow<BaseResult<CharactersResponse, WrappedResponse<CharactersResponse>>> {
+    ): Flow<BaseResult<List<Character>, WrappedResponse<CharactersResponse>>> {
         return flow {
             val response = marvelApiService.getCharacters(apiKey = apiKey, hash = hash, offset = offset, ts = ts)
 
             if (response.isSuccessful) {
                 val body = response.body()!!
-                emit(BaseResult.Success(body))
+
+                val characterList = arrayListOf<Character>()
+
+                body.data?.results?.let { characterNetworkList ->
+                    characterNetworkList.map { characterNetwork ->
+                        characterList.add(characterNetwork.toCharacter())
+                    }
+                }
+
+                emit(BaseResult.Success(characterList))
             } else {
                 val type = object : TypeToken<WrappedResponse<CharactersResponse>>() {}.type
                 val error: WrappedResponse<CharactersResponse> = Gson().fromJson(response.errorBody()!!.charStream(), type)
@@ -40,13 +51,14 @@ class MarvelApiRepositoryImpl @Inject constructor(
         apiKey: String,
         hash: String,
         ts: Long
-    ): Flow<BaseResult<CharactersResponse, WrappedResponse<CharactersResponse>>> = flow {
+    ): Flow<BaseResult<Character, WrappedResponse<CharactersResponse>>> = flow {
         val response = marvelApiService.getCharacter(id = id, apikey = apiKey, hash = hash, ts = ts)
 
         if (response.isSuccessful) {
             val body = response.body()!!
+            val characterNetwork = body.data!!.results!![0]
             emit(
-                BaseResult.Success(body)
+                BaseResult.Success(characterNetwork.toCharacter())
             )
         } else {
             val type = object : TypeToken<WrappedResponse<CharactersResponse>>() {}.type

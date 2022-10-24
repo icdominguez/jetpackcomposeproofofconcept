@@ -45,14 +45,14 @@ fun CharacterScreen(
                     modifier = Modifier.clickable {
                         uiEvent(
                             CharacterDetailViewModel.CharacterScreenEvent.OnFavoriteClicked(
-                                characterId = it.id,
-                                isFavorite = !it.isFavorite
+                                characterId = it.characterId,
+                                isFavorite = !it.favorite
                             )
                         )
                     }
                 ) {
                     Image(
-                        painter = if (it.isFavorite) painterResource(id = R.drawable.ic_favorite) else painterResource(id = R.drawable.ic_no_favorite),
+                        painter = if (it.favorite) painterResource(id = R.drawable.ic_favorite) else painterResource(id = R.drawable.ic_no_favorite),
                         contentDescription = "Character image",
                         contentScale = ContentScale.Crop,
                         modifier = Modifier

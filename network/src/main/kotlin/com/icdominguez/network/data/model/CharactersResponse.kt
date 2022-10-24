@@ -29,10 +29,10 @@ data class Data(
     @SerializedName("count")
     var count: Int? = null,
     @SerializedName("results")
-    var results: List<Character>? = null
+    var results: List<CharacterNetwork>? = null
 )
 
-data class Character(
+data class CharacterNetwork(
     @SerializedName("id")
     var id: Int? = null,
     @SerializedName("name")
